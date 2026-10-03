@@ -302,4 +302,8 @@ vor Phase 4, damit „`main` = live“ in `main` dokumentiert ist. Da sich `bon_
 
 ### Phase 3
 
-- Tag `v1.0.0` auf den Übergabe-Commit gesetzt.
+- Tag `v1.0.0` lokal auf den Übergabe-Commit `4789ec9` gesetzt. **Push des Tags nicht möglich:** Der Git-Proxy der
+  Claude-Code-Umgebung lässt nur Pushes auf den Arbeits-Branch zu. Nach dem Merge nach `main` den Tag auf GitHub
+  anlegen (Releases → „Draft a new release“ → Tag `v1.0.0` auf `main`).
+- Alle Änderungen liegen auf Branch `claude/git-deployer-addon-phases-3cudkz`. Das Repo hat noch keinen `main`:
+  Den Branch als `main` übernehmen bzw. per PR mergen und `main` als Default-Branch setzen.
