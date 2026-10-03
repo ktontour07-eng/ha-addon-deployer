@@ -1,0 +1,44 @@
+name: Git-Deployer
+version: "1.0.0"
+slug: git_deployer
+description: Spielt eigene Add-ons automatisch aus GitHub ein (git fetch → Update/Rebuild)
+arch:
+  - amd64
+startup: services
+boot: auto
+init: true
+hassio_api: true
+# darf andere Add-ons aktualisieren/neu bauen und den Store neu laden.
+# Bei HTTP 403 im Probelauf auf "admin" erhöhen und in DOCS.md begründen.
+hassio_role: manager
+homeassistant_api: true    # für Benachrichtigungen (persistent_notification)
+map:
+  - type: addons
+    read_only: false
+options:
+  github_token: ""
+  interval_minutes: 5
+  dry_run: true            # beim ersten Start nur protokollieren, nichts ändern
+  notify_success: true
+  apps:
+    - repo: ktontour07-eng/ha-Bon
+      branch: main
+      path: bon_tracker
+      slug: bon_tracker
+      health_url: "http://192.168.178.28:5010/api/ping"
+    - repo: ktontour07-eng/Trainer-Gemini-HA
+      branch: main
+      path: trainings_coach
+      slug: trainings_coach
+      health_url: "http://192.168.178.28:5000/health"
+schema:
+  github_token: password
+  interval_minutes: "int(1,60)"
+  dry_run: bool
+  notify_success: bool
+  apps:
+    - repo: "match(^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$)"
+      branch: str
+      path: str
+      slug: "match(^[a-z0-9_]+$)"
+      health_url: "str?"   # NIE url? – Supervisor lehnt sonst Speichern und Start ab
